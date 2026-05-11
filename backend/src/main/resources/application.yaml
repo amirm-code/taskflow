@@ -25,7 +25,7 @@ server:
   port: 8080
 
 jwt:
-  secret: dGFza2Zsb3ctc2VjcmV0LWtleS1mb3ItdGFza2Zsb3ctYXBwLTIwMjU=
+  secret: ${JWT_SECRET}
   expiration: 86400000
 
 management:
