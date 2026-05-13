@@ -3,6 +3,7 @@ package com.taskflow.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,10 +34,10 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Project> projects;
+    private List<Project> projects = new ArrayList<>();
 
     @ManyToMany(mappedBy = "members")
-    private List<Project> memberProjects;
+    private List<Project> memberProjects = new ArrayList<>();
 
 
     public User(String name, String email, String password) {
