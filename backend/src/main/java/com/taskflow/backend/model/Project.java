@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,11 +40,11 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<User> members;
+    private List<User> members = new ArrayList<>();
 
     // Un projet a plusieurs tâches
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     public Project(String name, String description, User owner) {
         this.name = name;
