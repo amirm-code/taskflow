@@ -2,6 +2,7 @@ package com.taskflow.backend.controller;
 
 import com.taskflow.backend.dto.request.CreateTaskRequest;
 import com.taskflow.backend.dto.request.UpdateTaskRequest;
+import com.taskflow.backend.dto.response.PageResponse;
 import com.taskflow.backend.dto.response.TaskResponse;
 import com.taskflow.backend.model.TaskStatus;
 import com.taskflow.backend.service.TaskService;
@@ -77,4 +78,23 @@ public class TaskController {
         taskService.deleteTask(projectId, taskId, userDetails.getUsername());
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/paginated")
+    public ResponseEntity<PageResponse<TaskResponse>> getTasksPaginated(
+            @PathVariable Long projectId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(required = false) String status,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        return ResponseEntity.ok(
+                taskService.getTasksPaginated(
+                        projectId,
+                        userDetails.getUsername(),
+                        page, size, sortBy, status
+                )
+        );
+    }
+
 }

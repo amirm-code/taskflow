@@ -2,6 +2,7 @@ package com.taskflow.backend.service;
 
 import com.taskflow.backend.dto.request.CreateTaskRequest;
 import com.taskflow.backend.dto.request.UpdateTaskRequest;
+import com.taskflow.backend.dto.response.PageResponse;
 import com.taskflow.backend.dto.response.TaskResponse;
 import com.taskflow.backend.exception.BadRequestException;
 import com.taskflow.backend.exception.ResourceNotFoundException;
@@ -13,6 +14,10 @@ import com.taskflow.backend.repository.ProjectRepository;
 import com.taskflow.backend.repository.TaskRepository;
 import com.taskflow.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,6 +120,42 @@ public class TaskService {
 
         Task task = getTaskOrThrow(taskId, projectId);
         taskRepository.delete(task);
+    }
+
+    // Récupérer les tâches d'un projet avec pagination et filtre optionnel
+    public PageResponse<TaskResponse> getTasksPaginated(
+            Long projectId,
+            String email,
+            int page,
+            int size,
+            String sortBy,
+            String status) {
+
+        Project project = getProjectOrThrow(projectId);
+        checkAccess(project, email);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sortBy));
+
+        // Filtrer par statut si fourni, sinon toutes les tâches
+        Page<Task> taskPage;
+        if (status != null && !status.isEmpty()) {
+            TaskStatus taskStatus = TaskStatus.valueOf(status.toUpperCase());
+            taskPage = taskRepository.findByProjectIdAndStatus(projectId, taskStatus, pageable);
+        } else {
+            taskPage = taskRepository.findByProjectId(projectId, pageable);
+        }
+
+        return new PageResponse<>(
+                taskPage.getContent().stream()
+                        .map(this::toResponse)
+                        .toList(),
+                taskPage.getNumber(),
+                taskPage.getSize(),
+                taskPage.getTotalElements(),
+                taskPage.getTotalPages(),
+                taskPage.isFirst(),
+                taskPage.isLast()
+        );
     }
 
     // ── Méthodes privées ──────────────────────────────
