@@ -64,22 +64,39 @@ A full-stack task management application built with Spring Boot and React TypeSc
 
 ## Architecture
 
-**Backend** — Spring Boot layered architecture
-
-- `controller/` — REST endpoints, request validation
-- `service/` — Business logic, @Transactional
-- `repository/` — JPA repositories, database queries
-- `model/` — JPA entities (User, Project, Task)
-- `dto/` — Request/Response objects
-- `security/` — JWT filter chain, Spring Security config
-- `exception/` — Global error handling with @RestControllerAdvice
-
-**Frontend** — Feature-based architecture
-
-- `features/auth/` — Login, Register pages and hooks
-- `features/projects/` — Dashboard, Project management
-- `features/tasks/` — Kanban board, task CRUD
-- `shared/` — AuthContext, Axios instance, TypeScript types, PrivateRoute
+```text
+taskflow/
+├── backend/                          # Spring Boot REST API
+│   └── src/main/java/com/taskflow/
+│       ├── controller/               # REST controllers
+│       ├── service/                  # Business logic
+│       ├── repository/               # Spring Data JPA repositories
+│       ├── model/                    # JPA entities
+│       ├── dto/                      # Request / Response DTOs
+│       ├── security/                 # JWT & Spring Security
+│       ├── exception/                # Global exception handling
+│       └── config/                   # Application configuration
+│
+├── frontend/                         # React + TypeScript application
+│   └── src/
+│       ├── features/
+│       │   ├── auth/                 # Authentication pages
+│       │   ├── dashboard/            # Dashboard & analytics
+│       │   ├── projects/             # Project management
+│       │   └── tasks/                # Kanban board & tasks
+│       │
+│       ├── shared/
+│       │   ├── api/                  # Axios clients
+│       │   ├── components/           # Reusable UI components
+│       │   ├── context/              # React context
+│       │   └── types/                # TypeScript types
+│       │
+│       └── pages/                    # Application pages
+│
+├── docker-compose.yml                # Local development environment
+├── .env.example                      # Environment variables example
+└── README.md
+```
 
 ## Getting Started
 
