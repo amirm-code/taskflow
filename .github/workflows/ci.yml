@@ -45,7 +45,9 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/taskflow-backend:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/taskflow-backend:latest
+            ghcr.io/${{ github.repository_owner }}/taskflow-backend:${{ github.sha }}
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -82,7 +84,9 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/taskflow-frontend:latest
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/taskflow-frontend:latest
+            ghcr.io/${{ github.repository_owner }}/taskflow-frontend:${{ github.sha }}
 
   deploy:
     needs: [ build-backend, build-frontend ]

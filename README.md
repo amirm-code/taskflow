@@ -2,7 +2,7 @@
 
 A full-stack task management application built with Spring Boot and React TypeScript.
 
-
+![CI/CD](https://github.com/amirm-code/taskflow/actions/workflows/ci.yml/badge.svg)
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-green)
 ![React](https://img.shields.io/badge/React-18-blue)
