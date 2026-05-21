@@ -8,6 +8,10 @@ A full-stack task management application built with Spring Boot and React TypeSc
 ![React](https://img.shields.io/badge/React-18-blue)
 ![Docker](https://img.shields.io/badge/Docker-Compose-blue)
 
+## 🌐 Live Demo
+
+**[https://taskflow.massinissaamir.dev](https://taskflow.massinissaamir.dev)**
+
 ## Screenshots
 
 ### Login
@@ -122,6 +126,7 @@ Edit .env with your values, then start the entire stack
 
 The app will be available at:
 
+- **Live** → https://taskflow.massinissaamir.dev
 - **Frontend** → http://localhost:3000
 - **Backend API** → http://localhost:8080
 - **API Health** → http://localhost:8080/actuator/health
